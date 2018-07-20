@@ -46,7 +46,7 @@ void Group::addWord(Word *word) {
 	this->words->push_back(word);
 }
 
-// Group::moveWordTo moves the word at position pos from this group to another one. Move to NULL will effectively delete the word from memory.
+// Group::moveWordTo moves the word at position pos from this group to another one. Move to NULL will effectively delete the word from memory.
 void Group::moveWordTo(int pos, Group *group) {
 	if (group != NULL) {
 		group->addWord(this->words->at(pos));
@@ -71,4 +71,18 @@ std::vector<Word *> *Group::getAllWords() {
 		}
 	}
 	return words;
+}
+
+/* tree-view related */
+
+// row returns the index of the group in the parent group
+int Group::row() {
+	if (parent != NULL) {
+		for (int row = 0; row < parent->subgroups->size(); ++row) {
+			if (parent->subgroups->at(row) == this) {
+				return row;
+			}
+		}
+	}
+	return 0;
 }

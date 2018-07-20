@@ -8,6 +8,7 @@ class Group {
 	// members
 	std::string name;
 	std::string description;
+	int index;
 
 	Group *parent;
 	std::vector<Group *> *subgroups;
@@ -45,4 +46,7 @@ public:
 	void moveWordTo(int pos, Group *group);
 	void removeWord(int pos);
 	std::vector<Word *> *getAllWords();
+	
+	// tree-view related
+	int row();
 };

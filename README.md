@@ -13,11 +13,11 @@ Groups management
 - [x] Move a group from a group to another
 
 Words management
-- [ ] Add a new word to a group (text, meaning and description)
-- [ ] Remove a word from a group
-- [ ] Edit a word (change text and meaning)
-- [ ] Move a word from a group to another
-- [ ] List all words in a group (optionally with subgroups)
+- [x] Add a new word to a group (text, meaning and description)
+- [x] Remove a word from a group
+- [x] Edit a word (change text and meaning)
+- [x] Move a word from a group to another
+- [x] List all words in a group (optionally with subgroups)
 
 Word derivations
 - [ ] Create a word derivation pattern associated with a group

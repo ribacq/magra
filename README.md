@@ -9,7 +9,7 @@ Groups management
 - [x] Create a group with a name and description
 - [x] Read and write a group’s name and description
 - [x] Add a subgroup to a group
-- [x] List all existing groups in a tree structure
+- [ ] List all existing groups in a tree structure
 - [x] Move a group from a group to another
 
 Words management

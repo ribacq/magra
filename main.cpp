@@ -1,7 +1,10 @@
 #include <iostream>
 #include <vector>
 
+#include <QApplication>
+
 #include "group.h"
+#include "gui.h"
 
 using namespace std;
 
@@ -25,7 +28,7 @@ int main(int argc, char **argv) {
 	Group *g3 = new Group("verbs", "Verbs in Deẽreẽ", g);
 
 	std::vector<Group *> *gsubs = g->getSubgroups();
-	for (int i = 0; i < gsubs->size(); ++i) {
+	for (unsigned int i = 0; i < gsubs->size(); ++i) {
 		if (i > 0) {
 			cout << "; ";
 		}
@@ -43,12 +46,18 @@ int main(int argc, char **argv) {
 	//g2->removeWord(0);
 
 	std::vector<Word *> *gwords = g->getAllWords();
-	for (int i = 0; i < gwords->size(); ++i) {
+	for (unsigned int i = 0; i < gwords->size(); ++i) {
 		if (i > 0) {
 			cout << "; ";
 		}
 		cout << gwords->at(i)->getText();
 	}
 	cout << endl;
-	return 0;
+
+	// gui
+	QApplication app(argc, argv);
+	GUI *gui = new GUI();
+	gui->show();
+
+	return app.exec();
 }

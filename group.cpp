@@ -22,7 +22,7 @@ void Group::moveTo(Group *parent) {
 
 	// remove from current parent
 	if (this->parent != NULL) {
-		for (int i = 0; i < this->parent->subgroups->size(); ++i) {
+		for (unsigned int i = 0; i < this->parent->subgroups->size(); ++i) {
 			if (this->parent->subgroups->at(i) == this) {
 				this->parent->subgroups->erase(this->parent->subgroups->begin()+i);
 				break;
@@ -65,7 +65,7 @@ void Group::removeWord(int pos) {
 std::vector<Word *> *Group::getAllWords() {
 	std::vector<Word *> *words = new std::vector<Word *>(*this->words);
 	if (this->subgroups->size() > 0) {
-		for (int i = 0; i < this->subgroups->size(); ++i) {
+		for (unsigned int i = 0; i < this->subgroups->size(); ++i) {
 			std::vector<Word *> *subwords = this->subgroups->at(i)->getAllWords();
 			words->insert(words->end(), subwords->begin(), subwords->end());
 		}

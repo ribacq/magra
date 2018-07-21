@@ -1,13 +1,23 @@
-#include <string>
+/* Written by Quentin RIBAC
+ * July 2018
+ *
+ * This is free software.
+ * See LICENSE file for more info.
+ */
+
+#pragma once
+
 #include <vector>
+
+#include <QString>
 
 #include "word.h"
 
 // Group is the class for a group of words, that can also have subgroups.
 class Group {
 	// members
-	std::string name;
-	std::string description;
+	QString name;
+	QString description;
 	int index;
 
 	Group *parent;
@@ -16,13 +26,14 @@ class Group {
 	std::vector<Word *> *words;
 
 public:
-	// constructor
-	Group(std::string name, std::string description, Group *parent);
+	// constructor and desctructor
+	Group(QString name, QString description, Group *parent);
+	~Group();
 	
 	// getters
-	std::string getName()
+	QString getName()
 		{ return this->name; }
-	std::string getDescription()
+	QString getDescription()
 		{ return this->description; }
 	Group *getParent()
 		{ return this->parent; }
@@ -30,23 +41,28 @@ public:
 		{ return this->subgroups; }
 	std::vector<Word *> *getWords()
 		{ return this->words; }
+	Group *child(int i)
+		{ return this->subgroups->at(i); }
 	
 	// setters
-	void setName(std::string name)
+	void setName(QString name)
 		{ this->name = name; }
-	void setDescription(std::string description)
+	void setDescription(QString description)
 		{ this->description = description; }
 	
 	// groups management
 	void moveTo(Group *parent);
 
 	// words management
-	void addWord(std::string text, std::string meaning, std::string description);
+	void addWord(QString text, QString meaning, QString description);
 	void addWord(Word *word);
 	void moveWordTo(int pos, Group *group);
 	void removeWord(int pos);
 	std::vector<Word *> *getAllWords();
 	
 	// tree-view related
-	int row();
+	unsigned int row();
+	int columnCount()
+		{ return 2; }
+	QString data(int column) const;
 };

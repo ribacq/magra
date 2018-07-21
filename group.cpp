@@ -1,8 +1,14 @@
+/* Written by Quentin RIBAC
+ * July 2018
+ *
+ * This is free software.
+ * See LICENSE file for more info.
+ */
+
 #include "group.h"
-#include <iostream>
 
 // Group::Group is the constructor for the Group class.
-Group::Group(std::string name, std::string description, Group *parent): name(name), description(description) {
+Group::Group(QString name, QString description, Group *parent): name(name), description(description) {
 	// no subgroups or words in the beginning
 	this->subgroups = new std::vector<Group *>();
 	this->words = new std::vector<Word *>();
@@ -11,15 +17,25 @@ Group::Group(std::string name, std::string description, Group *parent): name(nam
 	this->moveTo(parent);
 }
 
+// Group::~Group is the destructor.
+Group::~Group() {
+	for (unsigned int i = 0; i < subgroups->size(); i++) {
+		Group *group = subgroups->at(i);
+		delete group;
+		subgroups->erase(subgroups->begin()+i);
+	}
+
+	for (unsigned int i = 0; i < words->size(); i++) {
+		Word *word = words->at(i);
+		delete word;
+		words->erase(words->begin()+i);
+	}
+}
+
 /* groups management */
 
 // Group::moveTo removes a group from its current parent and into the given group.
 void Group::moveTo(Group *parent) {
-	// do nothing if asked to move to NULL
-	if (parent == NULL) {
-		return;
-	}
-
 	// remove from current parent
 	if (this->parent != NULL) {
 		for (unsigned int i = 0; i < this->parent->subgroups->size(); ++i) {
@@ -30,15 +46,17 @@ void Group::moveTo(Group *parent) {
 		}
 	}
 
-	// link to new parent
-	this->parent = parent;
-	this->parent->subgroups->push_back(this);
+	if (parent != NULL) {
+		// link to new parent
+		this->parent = parent;
+		this->parent->subgroups->push_back(this);
+	}
 }
 
 /* words management */
 
 // Group::addWord adds a word to the group.
-void Group::addWord(std::string text, std::string meaning, std::string description) {
+void Group::addWord(QString text, QString meaning, QString description) {
 	this->words->push_back(new Word(text, meaning, description));
 }
 
@@ -76,13 +94,27 @@ std::vector<Word *> *Group::getAllWords() {
 /* tree-view related */
 
 // row returns the index of the group in the parent group
-int Group::row() {
+unsigned int Group::row() {
 	if (parent != NULL) {
-		for (int row = 0; row < parent->subgroups->size(); ++row) {
-			if (parent->subgroups->at(row) == this) {
-				return row;
+		for (unsigned int i = 0; i < parent->subgroups->size(); ++i) {
+			if (parent->subgroups->at(i) == this) {
+				return i;
 			}
 		}
 	}
 	return 0;
+}
+
+QString Group::data(int column) const {
+	switch (column) {
+	case 0:
+		return name;
+		break;
+	case 1:
+		return description;
+		break;
+	default:
+		return name;
+		break;
+	}
 }

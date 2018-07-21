@@ -1,7 +1,14 @@
-#include <iostream>
+/* Written by Quentin RIBAC
+ * July 2018
+ *
+ * This is free software.
+ * See LICENSE file for more info.
+ */
+
 #include <vector>
 
 #include <QApplication>
+#include <QTextStream>
 
 #include "group.h"
 #include "gui.h"
@@ -9,35 +16,39 @@
 using namespace std;
 
 int main(int argc, char **argv) {
-	cout << "MAGRA\n";
+	QTextStream out(stdout);
+	out << "MAGRA\n";
 
 	// name and description
-	cout << endl << "NAME AND DESCRIPTION" << endl;
+	out << endl << "NAME AND DESCRIPTION" << endl;
 	Group *g = new Group("words", "Words of the Deẽreẽ conlang", NULL);
 
-	cout << g->getName() << ": " << g->getDescription() << endl;
+	out << g->getName() << ": " << g->getDescription() << endl;
 
 	g->setName("wordsDRE");
 	g->setDescription("Words in Deẽreẽ");
 
-	cout << g->getName() << ": " << g->getDescription() << endl;
+	out << g->getName() << ": " << g->getDescription() << endl;
 
 	// subgroups
-	cout << endl << "SUBGROUPS" << endl;
+	out << endl << "SUBGROUPS" << endl;
 	Group *g2 = new Group("nouns", "Nouns in Deẽreẽ", g);
 	Group *g3 = new Group("verbs", "Verbs in Deẽreẽ", g);
+	Group *nounsH = new Group("Human nouns", "Human noun class", g3);
+	Group *nounsM = new Group("Magic nouns", "Magic noun class", g2);
+	Group *nounsC = new Group("Common nouns", "Common noun class", g2);
 
 	std::vector<Group *> *gsubs = g->getSubgroups();
 	for (unsigned int i = 0; i < gsubs->size(); ++i) {
 		if (i > 0) {
-			cout << "; ";
+			out << "; ";
 		}
-		cout << gsubs->at(i)->getName();
+		out << gsubs->at(i)->getName() << " (" << gsubs->at(i)->row() << ")";
 	}
-	cout << endl;
+	out << endl;
 
 	// words
-	cout << endl << "WORDS" << endl;
+	out << endl << "WORDS" << endl;
 	g2->addWord("eltol", "bird", "flying animal with feathers");
 	g->addWord("ẽi", "person", "a human being");
 	g3->addWord("fete", "drink", "to drink");
@@ -48,16 +59,17 @@ int main(int argc, char **argv) {
 	std::vector<Word *> *gwords = g->getAllWords();
 	for (unsigned int i = 0; i < gwords->size(); ++i) {
 		if (i > 0) {
-			cout << "; ";
+			out << "; ";
 		}
-		cout << gwords->at(i)->getText();
+		out << gwords->at(i)->getText();
 	}
-	cout << endl;
+	out << endl;
 
 	// gui
 	QApplication app(argc, argv);
-	GUI *gui = new GUI();
+	GUI *gui = new GUI(g);
 	gui->show();
+	nounsH->moveTo(g2);
 
 	return app.exec();
 }

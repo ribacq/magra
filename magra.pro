@@ -18,7 +18,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 # Input
-HEADERS += group.h gui.h word.h
-SOURCES += group.cpp gui.cpp main.cpp word.cpp
+HEADERS += groupModel.h group.h gui.h word.h
+SOURCES += groupModel.cpp group.cpp gui.cpp main.cpp word.cpp
 
 QT += widgets

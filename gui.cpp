@@ -1,16 +1,22 @@
-#include <QLabel>
+/* Written by Quentin RIBAC
+ * July 2018
+ *
+ * This is free software.
+ * See LICENSE file for more info.
+ */
 
 #include "gui.h"
 
 // GUI is the constructor for the main window.
-GUI::GUI() {
+GUI::GUI(Group *group) {
 	setWindowTitle("Magra");
 
 	menuBar->addAction("File");
 	menuBar->addAction("About");
 	
-	currentGroupLabel->setText("[group name]");
-	leftVBox->addWidget(currentGroupLabel);
+	groupsTreeLabel->setText("Groups");
+	groupsTree->setModel(new GroupModel(group, 0));
+	leftVBox->addWidget(groupsTreeLabel);
 	leftVBox->addWidget(groupsTree);
 	
 	rightTabs->addTab(new QLabel("Daniel"), "Words");

@@ -37,6 +37,8 @@ int main(int argc, char **argv) {
 	Group *nounsH = new Group("Human nouns", "Human noun class", g3);
 	Group *nounsM = new Group("Magic nouns", "Magic noun class", g2);
 	Group *nounsC = new Group("Common nouns", "Common noun class", g2);
+	new Group("postpositions", "Postpositions", g);
+	g3->moveTo(g);
 
 	std::vector<Group *> *gsubs = g->getSubgroups();
 	for (unsigned int i = 0; i < gsubs->size(); ++i) {

@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 	// subgroups
 	out << endl << "SUBGROUPS" << endl;
 	Group *g2 = new Group("nouns", "Nouns in Deẽreẽ", g);
-	Group *g3 = new Group("verbs", "Verbs in Deẽreẽ", g);
+	Group *g3 = new Group("verbs", "Verbs in Deẽreẽ", g2);
 	Group *nounsH = new Group("Human nouns", "Human noun class", g3);
 	Group *nounsM = new Group("Magic nouns", "Magic noun class", g2);
 	Group *nounsC = new Group("Common nouns", "Common noun class", g2);

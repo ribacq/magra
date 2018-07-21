@@ -9,26 +9,51 @@
 
 // GUI is the constructor for the main window.
 GUI::GUI(Group *group) {
+	// data
+	groupModel = new GroupModel(group, 0);
+
+	// window settings
 	setWindowTitle("Magra");
 
+	// menu bar
 	menuBar->addAction("File");
 	menuBar->addAction("About");
 	
-	groupsTreeLabel->setText("Groups");
-	groupsTree->setModel(new GroupModel(group, 0));
-	leftVBox->addWidget(groupsTreeLabel);
-	leftVBox->addWidget(groupsTree);
+	// left side
+	setLeftSideLayout();
+	setLeftSideActions();
 	
-	rightTabs->addTab(new QLabel("Daniel"), "Words");
-	rightTabs->addTab(new QLabel("Ernest"), "Derivations");
-	rightTabs->addTab(new QLabel("Francis"), "Phrases");
+	// right side
+	rightSide->addTab(new QLabel("Daniel"), "Words");
+	rightSide->addTab(new QLabel("Ernest"), "Derivations");
+	rightSide->addTab(new QLabel("Francis"), "Phrases");
 
+	// layout
 	layout->addWidget(menuBar);
 	layout->addLayout(mainLayout);
-	mainLayout->addLayout(leftVBox);
-	mainLayout->addWidget(rightTabs);
-	mainLayout->setStretchFactor(leftVBox, 1);
-	mainLayout->setStretchFactor(rightTabs, 2);
-
+	mainLayout->addLayout(leftSide);
+	mainLayout->addWidget(rightSide);
+	mainLayout->setStretchFactor(leftSide, 1);
+	mainLayout->setStretchFactor(rightSide, 2);
 	setLayout(layout);
+}
+
+// setLeftSideLayout defines positions of the left-side elements of the window
+void GUI::setLeftSideLayout() {
+	groupsTreeLabel->setText("Groups");
+	groupsTree->setModel(groupModel);
+	groupsButtonBar->addWidget(addGroupButton);
+	leftSide->addWidget(groupsTreeLabel);
+	leftSide->addLayout(groupsButtonBar);
+	leftSide->addWidget(groupsTree);
+}
+
+// setLeftSideActions defines the user interactions on the left side of the window
+void GUI::setLeftSideActions() {
+	connect(addGroupButton, SIGNAL(released()), this, SLOT(addGroup()));
+}
+
+// addGroup is a SLOT for adding a new group
+void GUI::addGroup() {
+	groupModel->addGroup("new group", "A new group", QModelIndex());
 }

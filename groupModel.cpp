@@ -5,6 +5,8 @@
  * See LICENSE file for more info.
  */
 
+#include <iostream>
+
 #include "groupModel.h"
 
 // GroupModel: constructor
@@ -113,4 +115,11 @@ QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int ro
 	}
 
 	return QVariant();
+}
+
+// addGroup creates and adds a new group to the tree
+void GroupModel::addGroup(QString name, QString description, const QModelIndex &parent) {
+	beginInsertRows(parent, 0, 0);
+	new Group(name, description, rootGroup);
+	endInsertRows();
 }

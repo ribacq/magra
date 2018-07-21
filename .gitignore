@@ -30,6 +30,7 @@
 *.exe
 *.out
 *.app
+magra
 
 # Vim temp files
 .*.swp
@@ -39,3 +40,6 @@ Makefile
 
 # Meta-Object Compiler files
 moc_*
+
+# Qt files
+.qmake.stash

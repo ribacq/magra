@@ -7,6 +7,7 @@
 
 #pragma once
 
+#include <iostream>
 #include <vector>
 
 #include <QString>
@@ -20,7 +21,7 @@ class Group {
 	QString description;
 	int index;
 
-	Group *parent;
+	Group *parent = NULL;
 	std::vector<Group *> *subgroups;
 
 	std::vector<Word *> *words;

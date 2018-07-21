@@ -3,7 +3,7 @@
 Magra is a vocabulary management and sentence generation program aimed at conlangers.
 It is written in C++. This is my first real project in this language.
 
-## What should you be able to do?
+## Features
 
 Groups management
 - [ ] Create a group with a name and description
@@ -33,3 +33,12 @@ Phrase construction
 File management
 - [ ] Save a given group, all its subgroups, words, derivations patterns and automatons to a file
 - [ ] Load a group from a file and add it to the current tree
+
+## Compilation and use
+
+Be sure to have Qt5 installed on your computer.
+
+```
+qmake-qt5 && make
+./magra
+```

@@ -10,8 +10,8 @@ It is written in C++ and uses Qt for the GUI. This is my first real project in t
 Groups management
 - [ ] Create a group with a name and description
 - [ ] View and edit a name and description
-- [ ] Add a subgroup to a group
-- [ ] List all existing groups in a tree structure
+- [x] Add a subgroup to a group
+- [x] List all existing groups in a tree structure
 - [ ] Move a group from a group to another
 
 Words management

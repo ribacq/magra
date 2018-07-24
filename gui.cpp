@@ -8,9 +8,9 @@
 #include "gui.h"
 
 // GUI is the constructor for the main window.
-GUI::GUI(Group *group) {
+GUI::GUI() {
 	// data
-	groupModel = new GroupModel(group, 0);
+	groupModel = new GroupModel(NULL, 0);
 
 	// window settings
 	setWindowTitle("Magra");
@@ -42,6 +42,7 @@ GUI::GUI(Group *group) {
 void GUI::setLeftSideLayout() {
 	groupsTreeLabel->setText("Groups");
 	groupsTree->setModel(groupModel);
+	groupsTree->setSelectionModel(new QItemSelectionModel(groupModel));
 	groupsButtonBar->addWidget(addGroupButton);
 	leftSide->addWidget(groupsTreeLabel);
 	leftSide->addLayout(groupsButtonBar);
@@ -55,5 +56,7 @@ void GUI::setLeftSideActions() {
 
 // addGroup is a SLOT for adding a new group
 void GUI::addGroup() {
-	groupModel->addGroup("new group", "A new group", QModelIndex());
+	QModelIndex parent = groupsTree->selectionModel()->currentIndex();
+	groupModel->insertRows(groupModel->rowCount(parent), 1, parent);
+	groupsTree->setExpanded(parent, true);
 }

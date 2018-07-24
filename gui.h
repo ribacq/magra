@@ -16,6 +16,7 @@
 #include <QMenuBar>
 #include <QTreeView>
 #include <QTreeWidgetItem>
+#include <QModelIndex>
 #include <QLabel>
 #include <QPushButton>
 
@@ -41,7 +42,7 @@ class GUI : public QWidget {
 	QTreeView *groupsTree = new QTreeView();
 	QLabel *groupsTreeLabel = new QLabel();
 	QHBoxLayout *groupsButtonBar = new QHBoxLayout();
-	QPushButton *addGroupButton = new QPushButton("Add");
+	QPushButton *addGroupButton = new QPushButton("Add group");
 	void setLeftSideLayout();
 	void setLeftSideActions();
 
@@ -50,7 +51,7 @@ class GUI : public QWidget {
 
 public:
 	// constructor
-	GUI(Group *group);
+	GUI();
 
 public slots:
 	void addGroup();

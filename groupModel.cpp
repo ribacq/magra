@@ -13,8 +13,12 @@
 GroupModel::GroupModel(Group *data, QObject *parent) : QAbstractItemModel(parent) {
 	QList<QVariant> rootData;
 	rootData << "Name" << "Description";
-	rootGroup = new Group("Name", "Description", NULL);
-	data->moveTo(rootGroup);
+	rootGroup = new Group("Name", "Description", NULL, -1);
+	if (data != NULL) {
+		data->moveTo(rootGroup, -1);
+	} else {
+		new Group("words", "Words", rootGroup, -1);
+	}
 }
 
 // ~GroupModel: destructor
@@ -117,9 +121,21 @@ QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int ro
 	return QVariant();
 }
 
-// addGroup creates and adds a new group to the tree
-void GroupModel::addGroup(QString name, QString description, const QModelIndex &parent) {
-	beginInsertRows(parent, 0, 0);
-	new Group(name, description, rootGroup);
+// insertRows creates and adds news groups to the tree
+bool GroupModel::insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) {
+	beginInsertRows(parent, row, row+count-1);
+	Group *parentGroup;
+	if (parent.isValid()) {
+		parentGroup = static_cast<Group *>(parent.internalPointer());
+	} else {
+		parentGroup = rootGroup;
+	}
+	for (int i = 0; i < count; ++i) {
+		new Group("new group", "A new group", parentGroup, row+i);
+	}
 	endInsertRows();
+
+	//rootGroup->printTree(0);
+
+	return true;
 }

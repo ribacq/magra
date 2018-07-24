@@ -7,7 +7,7 @@
 
 #pragma once
 
-#include <iostream>
+#include <QTextStream>
 #include <vector>
 
 #include <QString>
@@ -28,7 +28,7 @@ class Group {
 
 public:
 	// constructor and desctructor
-	Group(QString name, QString description, Group *parent);
+	Group(QString name, QString description, Group *parent, int row);
 	~Group();
 	
 	// getters
@@ -52,7 +52,7 @@ public:
 		{ this->description = description; }
 	
 	// groups management
-	void moveTo(Group *parent);
+	void moveTo(Group *parent, int row);
 
 	// words management
 	void addWord(QString text, QString meaning, QString description);
@@ -66,4 +66,7 @@ public:
 	int columnCount()
 		{ return 2; }
 	QString data(int column) const;
+
+	// misc.
+	void printTree(unsigned int indent) const;
 };

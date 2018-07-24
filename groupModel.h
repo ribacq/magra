@@ -37,7 +37,5 @@ public:
 	QModelIndex parent(const QModelIndex &index) const override;
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
-
-	// data manipulation methods
-	void addGroup(QString name, QString description, const QModelIndex &parent);
+	bool insertRows(int row, int count, const QModelIndex &parent) override;
 };

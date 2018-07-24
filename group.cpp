@@ -8,13 +8,13 @@
 #include "group.h"
 
 // Group::Group is the constructor for the Group class.
-Group::Group(QString name, QString description, Group *parent): name(name), description(description) {
+Group::Group(QString name, QString description, Group *parent, int row): name(name), description(description) {
 	// no subgroups or words in the beginning
 	this->subgroups = new std::vector<Group *>();
 	this->words = new std::vector<Word *>();
 
 	// insert in the tree
-	this->moveTo(parent);
+	this->moveTo(parent, row);
 }
 
 // Group::~Group is the destructor.
@@ -35,7 +35,7 @@ Group::~Group() {
 /* groups management */
 
 // Group::moveTo removes a group from its current parent and into the given group.
-void Group::moveTo(Group *parent) {
+void Group::moveTo(Group *parent, int row) {
 	// remove from current parent
 	if (this->parent != NULL) {
 		for (unsigned int i = 0; i < this->parent->subgroups->size(); ++i) {
@@ -49,7 +49,11 @@ void Group::moveTo(Group *parent) {
 	if (parent != NULL) {
 		// link to new parent
 		this->parent = parent;
-		this->parent->subgroups->push_back(this);
+		if (row < 0) {
+			this->parent->subgroups->push_back(this);
+		} else {
+			this->parent->subgroups->insert(this->parent->subgroups->begin() + row, this);
+		}
 	}
 }
 
@@ -116,5 +120,19 @@ QString Group::data(int column) const {
 	default:
 		return name;
 		break;
+	}
+}
+
+/* misc */
+
+// prints the groups tree to STDOUT
+void Group::printTree(unsigned int indent) const {
+	QTextStream out(stdout);
+	for (unsigned int i = 0; i < indent; ++i) {
+		out << "  ";
+	}
+	out << name << "\n";
+	for (unsigned int i = 0; i < subgroups->size(); ++i) {
+		subgroups->at(i)->printTree(indent + 1);
 	}
 }

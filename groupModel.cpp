@@ -122,7 +122,7 @@ QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int ro
 }
 
 // insertRows creates and adds news groups to the tree
-bool GroupModel::insertRows(int row, int count, const QModelIndex &parent = QModelIndex()) {
+bool GroupModel::insertRows(int row, int count, const QModelIndex &parent) {
 	beginInsertRows(parent, row, row+count-1);
 	Group *parentGroup;
 	if (parent.isValid()) {

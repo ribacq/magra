@@ -56,7 +56,14 @@ void GUI::setLeftSideActions() {
 
 // addGroup is a SLOT for adding a new group
 void GUI::addGroup() {
-	QModelIndex parent = groupsTree->selectionModel()->currentIndex();
-	groupModel->insertRows(groupModel->rowCount(parent), 1, parent);
-	groupsTree->setExpanded(parent, true);
+	if (groupsTree->selectionModel()->hasSelection()) {
+		QModelIndex index = groupsTree->selectionModel()->selectedIndexes().at(0);
+		groupModel->insertRows(groupModel->rowCount(index), 1, index);
+		if (!groupsTree->isExpanded(index)) {
+			groupsTree->expand(index);
+		}
+		groupsTree->selectionModel()->clearSelection();
+	} else {
+		groupModel->insertRows(groupModel->rowCount(QModelIndex()), 1, QModelIndex());
+	}
 }

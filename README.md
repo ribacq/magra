@@ -8,11 +8,12 @@ It is written in C++ and uses Qt for the GUI. This is my first real project in t
 ## Features
 
 Groups management
-- [ ] Create a group with a name and description
-- [ ] View and edit a name and description
+- [x] Create a group
+- [x] View and edit a group’s name and description
 - [x] Add a subgroup to a group
 - [x] List all existing groups in a tree structure
 - [ ] Move a group from a group to another
+- [ ] Remove a group
 
 Words management
 - [ ] Add a new word to a group (text, meaning and description)
@@ -23,13 +24,13 @@ Words management
 
 Word derivations
 - [ ] Create a word derivation pattern associated with a group (*regexp?*)
-- [ ] View and edit a name and description
+- [ ] View and edit a pattern’s name and description
 - [ ] Apply the pattern to words in the group to make new words
 - [ ] New words shall be stored in the same group or in another
 
 Phrase construction
 - [ ] Create finite-state automatons for syntactical structures (not associated with a group)
-- [ ] View and edit a name and description
+- [ ] View and edit an automaton’s name and description
 - [ ] Each automaton can include derivation patterns
 - [ ] Use these automatons to generate random phrases
 

@@ -29,7 +29,7 @@ public:
 	GroupModel(Group *data, QObject *parent);
 	~GroupModel();
 	
-	// overriding QAbstractItemModel methods
+	// for read-only
 	QVariant data(const QModelIndex &index, int role) const override;
 	Qt::ItemFlags flags(const QModelIndex &index) const override;
 	QVariant headerData(int section, Qt::Orientation orientation, int role = Qt::DisplayRole) const override;
@@ -37,5 +37,8 @@ public:
 	QModelIndex parent(const QModelIndex &index) const override;
 	int rowCount(const QModelIndex &parent = QModelIndex()) const override;
 	int columnCount(const QModelIndex &parent = QModelIndex()) const override;
+
+	// for edition
 	bool insertRows(int row, int count, const QModelIndex &parent) override;
+	bool setData(const QModelIndex &index, QString name, QString description);
 };

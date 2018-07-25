@@ -12,6 +12,7 @@
 #include <QWidget>
 #include <QHBoxLayout>
 #include <QVBoxLayout>
+#include <QFormLayout>
 #include <QTabWidget>
 #include <QMenuBar>
 #include <QTreeView>
@@ -19,6 +20,7 @@
 #include <QModelIndex>
 #include <QLabel>
 #include <QPushButton>
+#include <QLineEdit>
 
 #include "groupModel.h"
 #include "group.h"
@@ -40,8 +42,11 @@ class GUI : public QWidget {
 	// left side
 	QVBoxLayout *leftSide = new QVBoxLayout();
 	QTreeView *groupsTree = new QTreeView();
-	QLabel *groupsTreeLabel = new QLabel();
-	QHBoxLayout *groupsButtonBar = new QHBoxLayout();
+	QLabel *groupsTreeLabel = new QLabel("Groups");
+	QFormLayout *groupEditForm = new QFormLayout();
+	QLineEdit *groupEditName = new QLineEdit();
+	QLineEdit *groupEditDescription = new QLineEdit();
+	QPushButton *saveGroupButton = new QPushButton("Save");
 	QPushButton *addGroupButton = new QPushButton("Add group");
 	void setLeftSideLayout();
 	void setLeftSideActions();
@@ -53,6 +58,8 @@ public:
 	// constructor
 	GUI();
 
-public slots:
+protected slots:
 	void addGroup();
+	void updateGroupEditForm(const QModelIndex &current, const QModelIndex &previous);
+	void saveGroupEditForm();
 };

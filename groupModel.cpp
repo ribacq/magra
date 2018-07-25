@@ -139,3 +139,16 @@ bool GroupModel::insertRows(int row, int count, const QModelIndex &parent) {
 
 	return true;
 }
+
+bool GroupModel::setData(const QModelIndex &index, QString name, QString description) {
+	if (!index.isValid()) {
+		return false;
+	}
+
+	Group *group = static_cast<Group *>(index.internalPointer());
+	group->setName(name);
+	group->setDescription(description);
+	emit dataChanged(index, index);
+
+	return true;
+}

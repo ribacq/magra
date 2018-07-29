@@ -53,10 +53,15 @@ void GUI::setLeftSideLayout() {
 
 // setLeftSideActions defines the user interactions on the left side of the window
 void GUI::setLeftSideActions() {
+	// groups tree
 	groupsTree->setModel(groupModel);
 	groupsTree->setSelectionModel(new QItemSelectionModel(groupModel));
-	connect(addGroupButton, SIGNAL(released()), this, SLOT(addGroup()));
 	connect(groupsTree->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(updateGroupEditForm(const QModelIndex &, const QModelIndex &)));
+	groupsTree->setDragEnabled(true);
+	groupsTree->setDragDropMode(QAbstractItemView::InternalMove);
+	
+	// buttons
+	connect(addGroupButton, SIGNAL(released()), this, SLOT(addGroup()));
 	connect(saveGroupButton, SIGNAL(released()), this, SLOT(saveGroupEditForm()));
 	connect(deleteGroupButton, SIGNAL(released()), this, SLOT(deleteGroup()));
 }

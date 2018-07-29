@@ -42,4 +42,7 @@ public:
 	bool insertRows(int row, int count, const QModelIndex &parent) override;
 	bool setData(const QModelIndex &index, QString name, QString description);
 	bool removeRows(int row, int count, const QModelIndex &parent) override;
+
+	// drag and drop support
+	// ?
 };

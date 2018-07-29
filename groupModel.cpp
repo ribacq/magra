@@ -140,6 +140,7 @@ bool GroupModel::insertRows(int row, int count, const QModelIndex &parent) {
 	return true;
 }
 
+// setData sets the Group at given index with the provided name and description
 bool GroupModel::setData(const QModelIndex &index, QString name, QString description) {
 	if (!index.isValid()) {
 		return false;
@@ -150,5 +151,22 @@ bool GroupModel::setData(const QModelIndex &index, QString name, QString descrip
 	group->setDescription(description);
 	emit dataChanged(index, index);
 
+	return true;
+}
+
+// removeRows 
+bool GroupModel::removeRows(int row, int count, const QModelIndex &parent = QModelIndex()) {
+	Group *parentGroup;
+	if (!parent.isValid()) {
+		parentGroup = rootGroup;
+	} else {
+		parentGroup = static_cast<Group *>(parent.internalPointer());
+	}
+
+	beginRemoveRows(parent, row, row+count-1);
+	for (int i = row; i < row + count; ++i) {
+		delete parentGroup->child(i);
+	}
+	endRemoveRows();
 	return true;
 }

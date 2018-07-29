@@ -17,8 +17,7 @@ using namespace std;
 
 int main(int argc, char **argv) {
 	// log
-	QTextStream out(stdout);
-	out << "MAGRA\n";
+	QTextStream(stdout) << "MAGRA\n";
 
 	// gui
 	QApplication app(argc, argv);

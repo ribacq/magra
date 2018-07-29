@@ -21,6 +21,7 @@
 #include <QLabel>
 #include <QPushButton>
 #include <QLineEdit>
+#include <QMessageBox>
 
 #include "groupModel.h"
 #include "group.h"
@@ -47,7 +48,9 @@ class GUI : public QWidget {
 	QLineEdit *groupEditName = new QLineEdit();
 	QLineEdit *groupEditDescription = new QLineEdit();
 	QPushButton *saveGroupButton = new QPushButton("Save");
+	QHBoxLayout *groupButtonBar = new QHBoxLayout();
 	QPushButton *addGroupButton = new QPushButton("Add group");
+	QPushButton *deleteGroupButton = new QPushButton("Delete");
 	void setLeftSideLayout();
 	void setLeftSideActions();
 
@@ -62,4 +65,5 @@ protected slots:
 	void addGroup();
 	void updateGroupEditForm(const QModelIndex &current, const QModelIndex &previous);
 	void saveGroupEditForm();
+	void deleteGroup();
 };

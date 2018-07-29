@@ -44,8 +44,10 @@ void GUI::setLeftSideLayout() {
 	leftSide->addWidget(addGroupButton);
 	groupEditForm->addRow("Name", groupEditName);
 	groupEditForm->addRow("Description", groupEditDescription);
+	groupButtonBar->addWidget(deleteGroupButton);
+	groupButtonBar->addWidget(saveGroupButton);
 	leftSide->addLayout(groupEditForm);
-	leftSide->addWidget(saveGroupButton);
+	leftSide->addLayout(groupButtonBar);
 	leftSide->addWidget(groupsTree);
 }
 
@@ -56,6 +58,7 @@ void GUI::setLeftSideActions() {
 	connect(addGroupButton, SIGNAL(released()), this, SLOT(addGroup()));
 	connect(groupsTree->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(updateGroupEditForm(const QModelIndex &, const QModelIndex &)));
 	connect(saveGroupButton, SIGNAL(released()), this, SLOT(saveGroupEditForm()));
+	connect(deleteGroupButton, SIGNAL(released()), this, SLOT(deleteGroup()));
 }
 
 // addGroup is a SLOT for adding a new group
@@ -92,4 +95,24 @@ void GUI::saveGroupEditForm() {
 
 	QModelIndex index = groupsTree->selectionModel()->selectedIndexes().at(0);
 	groupModel->setData(index, groupEditName->text(), groupEditDescription->text());
+}
+
+// deleteGroup is a SLOT deleting selected group upon confirmation
+void GUI::deleteGroup() {
+	if (!groupsTree->selectionModel()->hasSelection()) {
+		return;
+	}
+
+	QModelIndex index = groupsTree->selectionModel()->selectedIndexes().at(0);
+	Group *group = static_cast<Group *>(index.internalPointer());
+
+	QString confirmTitle = QString("Confirm group deletion");
+	QString confirmText = QString("Are you sure you want to delete group ‘");
+	confirmText += group->getName();
+	confirmText += "’?";
+	QMessageBox::StandardButton reply = QMessageBox::question(NULL, confirmTitle, confirmText, QMessageBox::Cancel | QMessageBox::Yes);
+
+	if (reply == QMessageBox::Yes) {
+		groupModel->removeRow(index.row(), index.parent());
+	}
 }

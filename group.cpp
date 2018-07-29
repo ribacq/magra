@@ -19,12 +19,17 @@ Group::Group(QString name, QString description, Group *parent, int row): name(na
 
 // Group::~Group is the destructor.
 Group::~Group() {
+	// remove from parent
+	moveTo(NULL, -1);
+
+	// delete subgroups
 	for (unsigned int i = 0; i < subgroups->size(); i++) {
 		Group *group = subgroups->at(i);
 		delete group;
 		subgroups->erase(subgroups->begin()+i);
 	}
 
+	// delete words
 	for (unsigned int i = 0; i < words->size(); i++) {
 		Word *word = words->at(i);
 		delete word;

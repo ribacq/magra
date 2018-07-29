@@ -13,7 +13,7 @@ Groups management
 - [x] Add a subgroup to a group
 - [x] List all existing groups in a tree structure
 - [ ] Move a group from a group to another
-- [ ] Remove a group
+- [x] Remove a group
 
 Words management
 - [ ] Add a new word to a group (text, meaning and description)

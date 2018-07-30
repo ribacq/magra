@@ -58,6 +58,8 @@ void GUI::setLeftSideActions() {
 	groupsTree->setSelectionModel(new QItemSelectionModel(groupModel));
 	connect(groupsTree->selectionModel(), SIGNAL(currentChanged(const QModelIndex &, const QModelIndex &)), this, SLOT(updateGroupEditForm(const QModelIndex &, const QModelIndex &)));
 	groupsTree->setDragEnabled(true);
+	groupsTree->setAcceptDrops(true);
+	groupsTree->setDropIndicatorShown(true);
 	groupsTree->setDragDropMode(QAbstractItemView::InternalMove);
 	
 	// buttons

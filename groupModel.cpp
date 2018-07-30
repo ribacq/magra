@@ -11,6 +11,7 @@
 
 // GroupModel: constructor
 GroupModel::GroupModel(Group *data, QObject *parent) : QAbstractItemModel(parent) {
+
 	QList<QVariant> rootData;
 	rootData << "Name" << "Description";
 	rootGroup = new Group("Name", "Description", NULL, -1);
@@ -106,10 +107,10 @@ QVariant GroupModel::data(const QModelIndex &index, int role) const {
 // flags indicate that this is read-only
 Qt::ItemFlags GroupModel::flags(const QModelIndex &index) const {
 	if (!index.isValid()) {
-		return 0;
+		return Qt::ItemIsEditable | Qt::ItemIsDropEnabled | QAbstractItemModel::flags(index);
+	} else {
+		return Qt::ItemIsEditable | Qt::ItemIsDragEnabled | Qt::ItemIsDropEnabled | QAbstractItemModel::flags(index);
 	}
-
-	return QAbstractItemModel::flags(index);
 }
 
 // headerData uses the rootGroup
@@ -124,23 +125,60 @@ QVariant GroupModel::headerData(int section, Qt::Orientation orientation, int ro
 // insertRows creates and adds news groups to the tree
 bool GroupModel::insertRows(int row, int count, const QModelIndex &parent) {
 	beginInsertRows(parent, row, row+count-1);
+
 	Group *parentGroup;
 	if (parent.isValid()) {
 		parentGroup = static_cast<Group *>(parent.internalPointer());
 	} else {
 		parentGroup = rootGroup;
 	}
+
 	for (int i = 0; i < count; ++i) {
 		new Group("new group", "A new group", parentGroup, row+i);
 	}
-	endInsertRows();
 
-	//rootGroup->printTree(0);
+	endInsertRows();
 
 	return true;
 }
 
 // setData sets the Group at given index with the provided name and description
+bool GroupModel::setData(const QModelIndex &index, const QVariant &value, int role = Qt::EditRole) {
+	if (!index.isValid()) {
+		return false;
+	}
+
+	Group *group = static_cast<Group *>(index.internalPointer());
+	Group *parentGroup;
+	if (index.parent().isValid()) {
+		parentGroup = static_cast<Group *>(index.parent().internalPointer());
+	} else {
+		parentGroup = rootGroup;
+	}
+	QTextStream(stdout) << "42 " << parentGroup->getName() << " > " << group->getName() << "\n";
+	switch (index.column()) {
+	case 0:
+		if (value.toString().length() > 0) {
+			group->setName(value.toString());
+			emit dataChanged(index, index);
+		}
+		break;
+	case 1:
+		if (value.toString().length() > 0) {
+			group->setDescription(value.toString());
+			emit dataChanged(index, index);
+		}
+		break;
+	}
+
+	if (group->getParent() != parentGroup) {
+		group->moveTo(parentGroup, 0);
+	}
+
+	return true;
+}
+
+// setData: a convinience method for renaming groups
 bool GroupModel::setData(const QModelIndex &index, QString name, QString description) {
 	if (!index.isValid()) {
 		return false;
@@ -149,7 +187,7 @@ bool GroupModel::setData(const QModelIndex &index, QString name, QString descrip
 	Group *group = static_cast<Group *>(index.internalPointer());
 	group->setName(name);
 	group->setDescription(description);
-	emit dataChanged(index, index);
+	emit dataChanged(createIndex(index.row(), 0, index.internalPointer()), createIndex(index.row(), 1, index.internalPointer()));
 
 	return true;
 }

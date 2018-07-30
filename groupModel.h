@@ -40,9 +40,11 @@ public:
 
 	// for edition
 	bool insertRows(int row, int count, const QModelIndex &parent) override;
+	bool setData(const QModelIndex &index, const QVariant &value, int role) override;
 	bool setData(const QModelIndex &index, QString name, QString description);
 	bool removeRows(int row, int count, const QModelIndex &parent) override;
 
 	// drag and drop support
-	// ?
+	Qt::DropActions supportedDropActions() const
+		{ return Qt::MoveAction; }
 };

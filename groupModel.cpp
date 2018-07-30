@@ -175,6 +175,8 @@ bool GroupModel::setData(const QModelIndex &index, const QVariant &value, int ro
 		group->moveTo(parentGroup, 0);
 	}
 
+	rootGroup->printTree();
+
 	return true;
 }
 

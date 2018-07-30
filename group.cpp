@@ -25,15 +25,15 @@ Group::~Group() {
 	// delete subgroups
 	for (unsigned int i = 0; i < subgroups->size(); i++) {
 		Group *group = subgroups->at(i);
-		delete group;
 		subgroups->erase(subgroups->begin()+i);
+		delete group;
 	}
 
 	// delete words
 	for (unsigned int i = 0; i < words->size(); i++) {
 		Word *word = words->at(i);
-		delete word;
 		words->erase(words->begin()+i);
+		delete word;
 	}
 }
 
@@ -133,6 +133,11 @@ QString Group::data(int column) const {
 // prints the groups tree to STDOUT
 void Group::printTree(unsigned int indent) const {
 	QTextStream out(stdout);
+
+	if (indent == 0) {
+		out << "\n-----\n";
+	}
+
 	for (unsigned int i = 0; i < indent; ++i) {
 		out << "  ";
 	}

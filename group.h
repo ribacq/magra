@@ -68,5 +68,5 @@ public:
 	QString data(int column) const;
 
 	// misc.
-	void printTree(unsigned int indent) const;
+	void printTree(unsigned int indent = 0) const;
 };
